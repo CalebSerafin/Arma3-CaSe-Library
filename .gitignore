@@ -1,0 +1,8 @@
+.vscode/
+.github/
+build
+*.biprivatekey
+*.log
+*.pbo
+*.pbo.bak
+*.bat

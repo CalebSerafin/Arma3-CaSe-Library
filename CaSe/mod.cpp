@@ -1,0 +1,11 @@
+name = "CaSe-Library";
+author = "Caleb Serafin";
+logo = "";
+logoOver = "";
+logoSmall = "";
+picture = "";
+description = "A collection of scripts that can be used by other missions.";
+tooltip = "CaSe - A script library";
+overview = "";
+actionName = "GitHub";
+action = "https://github.com/CalebSerafin/Arma3-CaSe-Library";
