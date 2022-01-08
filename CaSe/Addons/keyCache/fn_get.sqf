@@ -1,4 +1,4 @@
-    /*
+/*
 Maintainer: Caleb Serafin
     Checks if a key is in the translation DB.
     If it is contained, it updates the expiry and returns the translation.
@@ -16,7 +16,7 @@ Dependencies:
     <HASHMAP> CaSe_keyCache_DB
 
 Example:
-    "HelloWorld" call CaSe_fnc_keyCache_lookup;  // "HelloWorld"
+    "HelloWorld" call CaSe_fnc_keyCache_get;  // "HelloWorld"
 */
 #include "config.hpp"
 FIX_LINE_NUMBERS
@@ -31,4 +31,6 @@ isNil {
     };
     _cachedStruct set [2, serverTime + _lifeTime];
 };
+
+if (isNil '_translation') exitWith { nil };  // Stops SQF from resolving _translation.
 _translation;

@@ -17,3 +17,7 @@
 /// --- Package Specific Config --- ///
 // Default Time to live for translations.
 #define KEYCACHE_DEFAULT_TTL 120
+
+#define KEYCACHE_TEST_DIRECTORY_PATH "\x\CaSe\Addons\keyCache\Tests\"
+
+#define KEYCACHE_TEST_HINT(title,message) hint parseText (title + "<br/>" + message);
