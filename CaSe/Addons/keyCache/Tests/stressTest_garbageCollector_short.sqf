@@ -20,7 +20,7 @@ Dev_shortFpsStressTestHandle = [_fnc_reporter,_reporterContext] spawn {
         [_reporterContext, "Short FPS Stress Test<br/>" + _group + "<br/>" + _details] call _fnc_reporter
     };
 
-    "confirmUnitTest" call CaSe_fnc_keyCache_init;
+    "confirmUnitTest" call FNCP(init);
     private _keyCache_GC_generations = GETP(CaSe_keyCache_GC_generations);
     _keyCache_GC_generations #0 set [2,10];
     _keyCache_GC_generations #1 set [2,30];

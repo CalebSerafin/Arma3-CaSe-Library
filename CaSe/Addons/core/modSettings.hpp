@@ -26,7 +26,6 @@
 //#define ENABLE_GVAR_OVERWRITE_MITIGATION
 
 
-
 // Rename strings if package or mod names change. __has_include is evaluated before macros.
 #define HAS_PACKAGE_LOGGING           __has_include("\x\CaSe\Addons\logging\$PBOPREFIX$")
 #define HAS_PACKAGE_TESTS             __has_include("\x\CaSe\Addons\test\$PBOPREFIX$")

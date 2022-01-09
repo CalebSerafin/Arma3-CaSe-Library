@@ -14,7 +14,7 @@ Dev_unitTestInProgress = true;
 Dev_basicPromotionTestHandle = [_fnc_reporter,_reporterContext] spawn {
     //// Setup
     params ["_fnc_reporter","_reporterContext"];
-    "confirmUnitTest" call CaSe_fnc_keyCache_init;
+    "confirmUnitTest" call FNCP(init);
 
     private _keyCache_DB = GETP(DB);
     _keyCache_DB set ["Test123", [

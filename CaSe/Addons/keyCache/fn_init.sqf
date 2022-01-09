@@ -8,7 +8,7 @@ Environment: Any
 Public: No
 
 Example:
-    call CaSe_fnc_keyCache_init;
+    call FNCP(init);
 */
 #include "config.hpp"
 FIX_LINE_NUMBERS
@@ -20,7 +20,7 @@ FIX_LINE_NUMBERS
 #endif
 FIX_LINE_NUMBERS
 
-if (!isNil {GETP(init)}) exitWith { LOG_ERROR("Invoked Twice"); };
+if (!isNil QUOTE(GETP(init)) ) exitWith { LOG_ERROR("Invoked Twice"); };
 SETP(init, true);
 
 // Main translation DB

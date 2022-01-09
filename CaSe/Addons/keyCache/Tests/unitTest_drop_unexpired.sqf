@@ -12,7 +12,7 @@ Dev_unitTestInProgress = true;
 Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
     //// Setup
     params ["_fnc_reporter","_reporterContext"];
-    "confirmUnitTest" call CaSe_fnc_keyCache_init;
+    "confirmUnitTest" call FNCP(init);
     private _keyCache_DB = GETP(DB);
 
     Dev_keyCacheDropUnitTest_expired_onDisposeRan = false;

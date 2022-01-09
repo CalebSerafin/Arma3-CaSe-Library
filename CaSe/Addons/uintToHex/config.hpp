@@ -1,5 +1,5 @@
 /// --- Versioning --- ///
-#define PACKAGE keyCache
+#define PACKAGE uintToHex
 #define YEAR 21
 #define MONTH 12
 #define DAY 24
@@ -22,8 +22,6 @@
 
 /// --- Package Specific Config --- ///
 // Default Time to live for translations.
-#define KEYCACHE_DEFAULT_TTL 120
+#define UINTTOHEX_TEST_DIRECTORY_PATH "\x\CaSe\Addons\uintToHex\Tests\"
 
-#define KEYCACHE_TEST_DIRECTORY_PATH "\x\CaSe\Addons\keyCache\Tests\"
-
-#define KEYCACHE_TEST_HINT(title,message) hint parseText (title + "<br/>" + message);
+#define UINTTOHEX_TEST_HINT(title,message) hint parseText (title + "<br/>" + message);

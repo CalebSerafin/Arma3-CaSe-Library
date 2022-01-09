@@ -1,5 +1,6 @@
 .vscode/
 .github/
+.bin/
 build
 *.biprivatekey
 *.log

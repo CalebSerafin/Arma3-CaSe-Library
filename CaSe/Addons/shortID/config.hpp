@@ -1,8 +1,8 @@
 /// --- Versioning --- ///
-#define PACKAGE keyCache
-#define YEAR 21
-#define MONTH 12
-#define DAY 24
+#define PACKAGE shortID
+#define YEAR 22
+#define MONTH 1
+#define DAY 9
 #define PATCH 1
 
 
@@ -21,9 +21,4 @@
 
 
 /// --- Package Specific Config --- ///
-// Default Time to live for translations.
-#define KEYCACHE_DEFAULT_TTL 120
 
-#define KEYCACHE_TEST_DIRECTORY_PATH "\x\CaSe\Addons\keyCache\Tests\"
-
-#define KEYCACHE_TEST_HINT(title,message) hint parseText (title + "<br/>" + message);
