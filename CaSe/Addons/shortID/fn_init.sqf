@@ -29,6 +29,7 @@ Example:
 */
 #include "config.hpp"
 FIX_LINE_NUMBERS
+RUN_ONLY_ONCE(init)
 
 private _clientID = 0;
 private _counter1Modulo = 2^24;

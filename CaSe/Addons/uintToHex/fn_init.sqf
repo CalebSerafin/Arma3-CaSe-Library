@@ -8,9 +8,7 @@ Example:
 */
 #include "config.hpp"
 FIX_LINE_NUMBERS
-
-if (!isNil QUOTE(GETP(initComplete))) exitWith { LOG_ERROR("Invoked Twice"); };
-SETP(initComplete, true);
+RUN_ONLY_ONCE(init)
 
 private _b16LookupTable = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
 private _b16e2LookupTable = [];

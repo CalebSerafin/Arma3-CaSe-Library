@@ -1,8 +1,8 @@
 /// --- Versioning --- ///
-#define PACKAGE uintToHex
-#define YEAR 21
-#define MONTH 12
-#define DAY 24
+#define PACKAGE canRE
+#define YEAR 22
+#define MONTH 1
+#define DAY 10
 #define PATCH 1
 
 
@@ -21,7 +21,8 @@
 
 
 /// --- Package Specific Config --- ///
-// Default Time to live for translations.
-#define UINTTOHEX_TEST_DIRECTORY_PATH "\x\CaSe\Addons\uintToHex\Tests\"
+// Allows dynamic loading of functions from
+#define ENABLE_LOAD_FROM_CFGFUNCTIONS
+// Records an initial hash of the remote execution list.
+#define ENABLE_RE_LIST_VALIDATION
 
-#define UINTTOHEX_TEST_HINT(title,message) hint parseText (title + "<br/>" + message);

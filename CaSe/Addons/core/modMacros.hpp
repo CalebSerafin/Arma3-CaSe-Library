@@ -13,6 +13,7 @@ Requires the following to be defined before the include. Example:
 #define REFLECT(X) X
 #define SHARP REFLECT(#)
 #define QUOTE(X) #X
+#define SANITISE_IDENTIFIER(Name) (Name regexReplace ["[^a-z0-9_]/gio", "_"])  // Even though /optimise flag has a overhead, it's only noticible when dealing with a couple characters.
 
 #define GLUE(A,B)                 A##B
 #define GLUE_2(A,B)               A##B
@@ -181,15 +182,53 @@ Requires the following to be defined before the include. Example:
 
 
 /// --- CfgFunction Ease of Use --- ///
-#define FNC_FOLDER_PATH SYM_GLUE_4(\,\x,MOD,Addons,PACKAGE)
-#define FNC_SUBFOLDER_PATH(Folder) FNC_FOLDER_PATH##\##Folder
+#define PACKAGE_ROOT SYM_GLUE_4(\,x,MOD,Addons,PACKAGE)
+#define PACKAGE_FILE(File) SYM_GLUE(\,PACKAGE_ROOT,File)
+#define PACKAGE_FILE_SUB(Folder,File) SYM_GLUE_3(\,PACKAGE_ROOT,Folder,File)
+
+#define FNC_FILE(Name) UGLUE(fn,Name.sqf)
+#define FNC_PATH(Mod,Package,Name) PACKAGE_FILE(FNC_FILE(Name))
+#define FNC_SUB_PATH(Mod,Package,Folder,Name) PACKAGE_FILE_SUB(Folder,FNC_FILE(Name))
+
+#define QFNC_PATH(Mod,Package,Name) QUOTE(FNC_PATH(Mod,Package,Name))
+#define QFNC_SUB_PATH(Mod,Package,Folder,Name) QUOTE(FNC_SUB_PATH(Mod,Package,Folder,Name))
+
+#define QFNC_PATH_G(Package,Name) QFNC_PATH(MOD,Package,Name)
+#define QFNC_SUB_PATH_G(Package,Folder,Name) QFNC_SUB_PATH(MOD,Package,Folder,Name)
+
+#define QFNC_PATH_P(Name) QFNC_PATH(MOD,PACKAGE,Name)
+#define QFNC_SUB_PATH_P(Folder,Name) QFNC_SUB_PATH(MOD,PACKAGE,Folder,Name)
 
 #define DEFINE_FNC(Name) class UGLUE(PACKAGE,Name) {\
-    file = QUOTE(FNC_SUBFOLDER_PATH(UGLUE(fn,Name.sqf)));\
+    file = QFNC_PATH_P(Name);\
+    recompile = 1;\
+};
+#define DEFINE_FNC_SUB(Folder,Name) class UGLUE(PACKAGE,Name) {\
+    file = QFNC_SUB_PATH_P(Folder,Name);\
     recompile = 1;\
 };
 
+#define DEFINE_FNC_PREINIT(Name) class UGLUE(PACKAGE,Name) {\
+    file = QFNC_PATH_P(Name);\
+    recompile = 1;\
+    preInit = 1;\
+};
+#define DEFINE_FNC_SUB_PREINIT(Folder,Name) class UGLUE(PACKAGE,Name) {\
+    file = QFNC_SUB_PATH_P(Folder,Name);\
+    recompile = 1;\
+    preInit = 1;\
+};
 
 /// --- CfgRemoteExec Ease of Use --- ///
-#define ALLOW_FNC_RE(Name) class UGLUE(MOD,fnc,PACKAGE,Name) {};
+#define ALLOW_FNC_RE(Name) class FNCP(Name) {};
 #define BLOCK_FNC_RE(Name)
+
+#define ALLOW_CMD_RE(Name) class Name {};
+#define BLOCK_CMD_RE(Name)
+
+
+/// --- Init File Ease of Use --- ///
+#define RUN_ONLY_ONCE(LocalIdentifier) if (!isNil QUOTE(LocalIdentifier)) exitWith {}; SETP(UGLUE(hasRan,LocalIdentifier),true)
+
+#define RESET_RUN_ONLY_ONCE(Mod,Package,Identifier) SET_GENERIC(UGLUE_4(Mod,Package,hasRan,LocalIdentifier),nil)
+#define RESET_RUN_ONLY_ONCE_P(Identifier) SETP(UGLUE(hasRan,Identifier),nil)

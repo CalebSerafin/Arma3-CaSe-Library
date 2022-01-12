@@ -22,7 +22,7 @@
 
 
 
-/// --- Security --- ///
+/// --- Package Macros Config --- ///
 //#define ENABLE_GVAR_OVERWRITE_MITIGATION
 
 

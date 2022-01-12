@@ -5,4 +5,4 @@ SETP(DB, nil);
 SETP(GC_registeredItems, nil);
 SETP(GC_generations, nil);
 SETP(GC_gen0NewestBucket, nil);
-SETP(init, nil);
+RESET_RUN_ONLY_ONCE_P(init)

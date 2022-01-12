@@ -1,8 +1,8 @@
 /// --- Versioning --- ///
-#define PACKAGE uintToHex
-#define YEAR 21
-#define MONTH 12
-#define DAY 24
+#define PACKAGE core
+#define YEAR 22
+#define MONTH 1
+#define DAY 12
 #define PATCH 1
 
 
@@ -21,7 +21,3 @@
 
 
 /// --- Package Specific Config --- ///
-// Default Time to live for translations.
-#define UINTTOHEX_TEST_DIRECTORY_PATH "\x\CaSe\Addons\uintToHex\Tests\"
-
-#define UINTTOHEX_TEST_HINT(title,message) hint parseText (title + "<br/>" + message);

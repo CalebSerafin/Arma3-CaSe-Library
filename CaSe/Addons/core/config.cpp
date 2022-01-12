@@ -1,18 +1,4 @@
-/// --- Versioning --- ///
-#define PACKAGE core
-#define YEAR 21
-#define MONTH 12
-#define DAY 23
-#define PATCH 1
-
-/// --- Integration Detaction --- ///
-#if __has_include("modSettings.hpp")
-    #include "modSettings.hpp"
-    #include "modMacros.hpp"
-#else
-    #include "\x\CaSe\Addons\core\modSettings.hpp"
-    #include "\x\CaSe\Addons\core\modMacros.hpp"
-#endif
+#include "config.hpp"
 
 class CfgPatches {
     class ADDON {
@@ -27,5 +13,13 @@ class CfgPatches {
         version = VERSION_NUM;
         versionStr = VERSION_STR;
         versionAr[] = {VERSION_ARRAY};
+    };
+};
+
+class CfgFunctions {
+    class MOD {
+        class PACKAGE {
+            DEFINE_FNC_PREINIT(libraryInit)
+        };
     };
 };

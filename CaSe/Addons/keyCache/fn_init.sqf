@@ -19,9 +19,7 @@ FIX_LINE_NUMBERS
     if (_confirmUnitTest isNotEqualTo "confirmUnitTest") exitWith { LOG_ERROR("Unknown Code: "+str _confirmUnitTest) };
 #endif
 FIX_LINE_NUMBERS
-
-if (!isNil QUOTE(GETP(init)) ) exitWith { LOG_ERROR("Invoked Twice"); };
-SETP(init, true);
+RUN_ONLY_ONCE(init)
 
 // Main translation DB
 /*
