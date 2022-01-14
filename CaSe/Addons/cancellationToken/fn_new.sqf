@@ -3,6 +3,11 @@ Maintainer: Caleb Serafin
     Creates a new cancellation token.
     Can optionally specify a delay to automatic cancellation.
 
+    IMPORTANT:
+    Cancellation tokens with long finite delays MUST be disposed manually.
+    Dispose via [_cToken] call CaSe_fnc_cancellationToken_dispose;
+    Neglecting to dispose long delays will result in memory leaks until the timeout fires and releases it's reference to the cancellationToken.
+
 Arguments:
     <SCALAR> Delay in seconds. (Default: 1e39)
 

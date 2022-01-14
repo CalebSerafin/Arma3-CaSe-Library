@@ -22,6 +22,7 @@ class CfgFunctions {
             DEFINE_FNC(cancel)
             DEFINE_FNC(cancelAfter)
             DEFINE_FNC(createLinked)
+            DEFINE_FNC(dispose)
             DEFINE_FNC(init)
             DEFINE_FNC(isCancelled)
             DEFINE_FNC(new)

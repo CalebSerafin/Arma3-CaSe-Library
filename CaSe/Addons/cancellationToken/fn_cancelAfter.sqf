@@ -2,6 +2,12 @@
 Maintainer: Caleb Serafin
     Cancels a CancellationToken after a delay.
     Will override a previously set timer.
+    Use 1e39 to disable a previously set timer.
+
+    IMPORTANT:
+    Cancellation tokens with long finite delays MUST be disposed manually.
+    Dispose via [_cToken] call CaSe_fnc_cancellationToken_dispose;
+    Neglecting to dispose long delays will result in memory leaks until the timeout fires and releases it's reference to the cancellationToken.
 
 Arguments:
     <CancellationToken>
@@ -23,8 +29,6 @@ params [
 ];
 VALIDATE_CANCELLATION_TOKEN(_cancellationToken)
 
-if (!finite _delay) exitWith {};
-
 isNil {
     if (_cancellationToken #CTOKEN_I_IS_CANCELLED) exitWith {};
 
@@ -33,10 +37,12 @@ isNil {
         terminate _timerHandle;
     };
 
-    private _timerHandle = [_cancellationToken, _delay] spawn {
+    if (!finite _delay) exitWith {};
+
+    private _newTimerHandle = [_cancellationToken, _delay] spawn {
         params ["_cancellationToken", "_delay"];
         uiSleep _delay;
         [_cancellationToken] call FNCP(cancel);
     };
-    _cancellationToken set [CTOKEN_I_TIMER_HANDLE, _timerHandle];
+    _cancellationToken set [CTOKEN_I_TIMER_HANDLE, _newTimerHandle];
 };
