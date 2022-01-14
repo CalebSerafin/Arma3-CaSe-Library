@@ -167,9 +167,9 @@ Requires the following to be defined before the include. Example:
 #define GET_VARIABLE_D(Namespace,Name,Default) (Namespace getVariable [QUOTE(Name),Default])
 
 
-#define GVAR(Name) UGLUE_3(MOD,G,Name)
-#define SETG(Name,Value) SET_GENERIC(GVAR(Name),Value);
-#define GETG(Name) GET_GENERIC(GVAR(Name))
+#define GVAR(Package,Name) UGLUE_3(MOD,Package,Name)
+#define SETG(Name,Value) SET_GENERIC(PVAR(Package,Name),Value);
+#define GETG(Name) GET_GENERIC(PVAR(Package,Name))
 
 #define PVAR(Name) UGLUE_3(MOD,PACKAGE,Name)
 #define SETP(Name,Value) SET_GENERIC(PVAR(Name),Value);
@@ -232,3 +232,4 @@ Requires the following to be defined before the include. Example:
 
 #define RESET_RUN_ONLY_ONCE(Mod,Package,Identifier) SET_GENERIC(UGLUE_4(Mod,Package,hasRan,LocalIdentifier),nil)
 #define RESET_RUN_ONLY_ONCE_P(Identifier) SETP(UGLUE(hasRan,Identifier),nil)
+
