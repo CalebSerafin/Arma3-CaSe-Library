@@ -16,4 +16,4 @@ FIX_LINE_NUMBERS
 RUN_ONLY_ONCE(init)
 
 // Create a reference that breaks if the container is deep-copied or transferred to another machine.
-SETP(localRef, [nil])
+SETP(typeRef, [nil])

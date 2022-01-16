@@ -32,6 +32,7 @@ isNil {
     private _emptyArray = [];
     {
         if (_x isEqualTo _emptyArray) then { continue };
+        private _thisCancellationTokenRegistration = _x;
         _x params ["_code", "_argument"];
         _argument call _code;
     } forEach (_cancellationToken #CTOKEN_I_REGISTERED_CODE);

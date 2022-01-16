@@ -21,7 +21,7 @@ Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
     uiSleep 1;
 
     private _passedTest = true;
-    private _checkArray = [GETP(localRef), true, "Hello", []];
+    private _checkArray = [GETP(typeRef), true, "Hello", []];
     for "_i" from 0 to 3 do {
         if (_asyncTask #_i isNotEqualTo _checkArray#_i) exitWith { _passedTest = false };
     };

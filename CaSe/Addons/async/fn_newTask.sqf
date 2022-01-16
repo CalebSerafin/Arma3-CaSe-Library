@@ -27,7 +27,7 @@ params [
 ];
 
 private _asyncTask = [
-    GETP(localRef),
+    GETP(typeRef),
     false,
     nil,
     []

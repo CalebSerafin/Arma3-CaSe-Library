@@ -1,8 +1,8 @@
 #include "..\config.hpp"
 FIX_LINE_NUMBERS
 
-private _fnc_reporter = compileScript [ASYNC_TEST_DIRECTORY_PATH+"testReporter.sqf"];
-private _reporterContext = createHashmapFromArray [["_componentName","newTask-Empty"]];
+private _fnc_reporter = compileScript [TEST_DIRECTORY_PATH+"testReporter.sqf"];
+private _reporterContext = createHashmapFromArray [["_componentName","register-NoArg"]];
 
 if (!isNil {Dev_unitTestInProgress}) exitWith {
     LOG_ERROR("Previous unit test still running");
@@ -15,14 +15,16 @@ Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
 
     call FNCP(init);
     [_reporterContext, "Test Started"] call _fnc_reporter;
+    private _fnc_dummy = { systemChat "Hello World" };
 
     //// Assert
-    private _asyncTask = [] call FNCP(newTask);
+    private _ctNoArg = [] call FNCP(new);
+    [_ctNoArg, _fnc_dummy] call FNCP(register);
 
     private _passedTest = true;
-    private _checkArray = [GETP(typeRef), false, nil, []];
+    private _checkArrayNoArg = [GETP(typeRef), false, scriptNull, [ [_fnc_dummy, nil] ]];
     for "_i" from 0 to 3 do {
-        if (_asyncTask #_i isNotEqualTo _checkArray#_i) exitWith { _passedTest = false };
+        if (_ctArg #_i isNotEqualTo _checkArray#_i) exitWith { _passedTest = false };
     };
 
     if (_passedTest) then {
@@ -32,7 +34,8 @@ Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
     };
 
     //// Clean Up
-    call compileScript [ASYNC_TEST_DIRECTORY_PATH+"unitTestUtility_revertInit.sqf"];
+    call compileScript [TEST_DIRECTORY_PATH+"unitTestUtility_revertInit.sqf"];
+    call FNCP(init);
     Dev_unitTestInProgress = nil;
 };
 "Unit Test Started";

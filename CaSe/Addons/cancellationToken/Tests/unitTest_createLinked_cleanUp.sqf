@@ -1,8 +1,8 @@
 #include "..\config.hpp"
 FIX_LINE_NUMBERS
 
-private _fnc_reporter = compileScript [ASYNC_TEST_DIRECTORY_PATH+"testReporter.sqf"];
-private _reporterContext = createHashmapFromArray [["_componentName","newTask-Empty"]];
+private _fnc_reporter = compileScript [TEST_DIRECTORY_PATH+"testReporter.sqf"];
+private _reporterContext = createHashmapFromArray [["_componentName","createLinked-CleanUp"]];
 
 if (!isNil {Dev_unitTestInProgress}) exitWith {
     LOG_ERROR("Previous unit test still running");
@@ -14,16 +14,21 @@ Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
     params ["_fnc_reporter","_reporterContext"];
 
     call FNCP(init);
+    private _ctMasters = [];
+    _ctMasters resize 7;
+    _ctMasters = _ctMasters apply {[] call FNCP(new)};
+
     [_reporterContext, "Test Started"] call _fnc_reporter;
 
     //// Assert
-    private _asyncTask = [] call FNCP(newTask);
+    private _ctSlave = _ctMasters call FNCP(createLinked);
+    [_ctMasters #3] call FNCP(cancel);
 
     private _passedTest = true;
-    private _checkArray = [GETP(typeRef), false, nil, []];
-    for "_i" from 0 to 3 do {
-        if (_asyncTask #_i isNotEqualTo _checkArray#_i) exitWith { _passedTest = false };
-    };
+    {
+        private _cleanedUp = (_x #CTOKEN_I_REGISTERED_CODE) findIf {count _x > 0} == -1;
+        _passedTest = _passedTest && _cleanedUp;
+    } forEach _ctMasters;
 
     if (_passedTest) then {
         [_reporterContext, "Test Passed"] call _fnc_reporter;
@@ -32,7 +37,8 @@ Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
     };
 
     //// Clean Up
-    call compileScript [ASYNC_TEST_DIRECTORY_PATH+"unitTestUtility_revertInit.sqf"];
+    call compileScript [TEST_DIRECTORY_PATH+"unitTestUtility_revertInit.sqf"];
+    call FNCP(init);
     Dev_unitTestInProgress = nil;
 };
 "Unit Test Started";

@@ -25,6 +25,7 @@
 #define ASYNC_TEST_HINT(Title,Message) hint parseText (Title + "<br/>" + Message);
 
 #define TASK_PARAM_COUNT 4
+#define TASK_PARAM_TYPES [[], false, nil, []]
 
 #define TASK_I_LOCAL_REF 0
 #define TASK_I_HAS_RETURNED 1
@@ -35,4 +36,4 @@
 // 15Hz for one second, 4Hz for 5 seconds, 1Hz for 10 seconds, 5secλ for 30 seconds, 20secλ for remaining time.
 #define TASK_D_POLLING_PATTERN [[15, 20, 10, 6, 1], [0.06666667, 0.25, 1, 5, 20]]
 
-#define VALIDATE_ASYNC_TASK(AsyncTask) if (AsyncTask SHARP##TASK_I_LOCAL_REF isNotEqualTo GETP(localRef)) exitWith { LOG_ERROR("Invalid AsyncTask. Async tasks cannot be deep-copied or transferred over the network.") };
+#define VALIDATE_ASYNC_TASK(AsyncTask) if (AsyncTask SHARP##TASK_I_LOCAL_REF isNotEqualTo GETP(typeRef)) exitWith { if (AsyncTask isEqualTypeParams TASK_PARAM_TYPES) then {LOG_ERROR("Invalid AsyncTask. Async tasks cannot be deep-copied or transferred over the network.")} else {LOG_ERROR("Async task was not passed in.")} };

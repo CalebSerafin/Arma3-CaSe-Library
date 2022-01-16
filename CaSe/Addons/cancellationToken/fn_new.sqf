@@ -29,6 +29,10 @@ params [
     ["_delay", 1e39, [ 0 ]]
 ];
 
+if (_delay <= 0) exitWith {
+    [GETP(typeRef), true, scriptNull, []];
+};
+
 private _cToken = [GETP(typeRef), false, scriptNull, []];
 
 if (finite _delay) then {

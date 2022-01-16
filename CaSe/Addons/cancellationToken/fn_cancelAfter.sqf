@@ -37,6 +37,7 @@ isNil {
         terminate _timerHandle;
     };
 
+    if (_delay <= 0) exitWith { [_cancellationToken] call FNCP(cancel) };
     if (!finite _delay) exitWith {};
 
     private _newTimerHandle = [_cancellationToken, _delay] spawn {

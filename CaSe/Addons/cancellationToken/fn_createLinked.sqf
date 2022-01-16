@@ -22,21 +22,20 @@ if !(_this isEqualTypeAll []) exitWith {
 };
 VALIDATE_CANCELLATION_TOKEN_ARRAY(_this)
 
-private _cTokenArray = _this;
+private _ctMasterArray = _this;
 private _cToken = [] call FNCP(new);
 
 isNil {
-    if (_cTokenArray findIf {_x #CTOKEN_I_IS_CANCELLED} != -1) exitWith {
+    if (_ctMasterArray findIf {_x #CTOKEN_I_IS_CANCELLED} != -1) exitWith {
         [_cToken] call FNCP(cancel);
     };
+    // WON'T WORK, RECURSIVE REFERENCE.
+    // Maybe: store all tokens in a global something.
+    // Require a using statement system to enclose cancellation tokens, and dispose tokens detected to go out of scope.
+    // This will impact the Task system too.
+    private _ctRegistrations = _ctMasterArray apply {[_x, FNCP(cancel), [_cToken]] call FNCP(register)};
 
-    private _fnc_massUnregister = {
-        params ["_CTRegistrations","_cToken"];
-        { [_x] call FNCP(unregister) } forEach _CTRegistrations;
-        [_cToken] call FNCP(cancel);
-    };
-    private _CTRegistrations = [];
-    _CTRegistrations append (_cTokenArray apply { [_x, _fnc_massUnregister, [_CTRegistrations,_cToken]] call FNCP(register) });
+    [_cToken, { {[_x] call FNCP(unregister)} forEach _x }, _ctRegistrations] call FNCP(register);
 };
 
 _cToken;
