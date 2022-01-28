@@ -71,9 +71,9 @@ Requires the following to be defined before the include. Example:
     #define LOG(Type,Message) [Type,Message] call UGLUE_4(MOD,fnc,logging,log);
     #define LOG_S(Type,Message) [Type,Message] call UGLUE_4(MOD,fnc,logging,logServer);
 #else
-    #define LOG_FORMAT(Sender,Type,Message) ((systemTimeUTC apply {str _x} joinString "-") + " | " + str Sender + " | " + Type + " | " + Message)  // No Padding on system time
-    #define LOG(Type,Message) diag_log text LOG_FORMAT(clientOwner,Type,Message);
-    #define LOG_S(Type,Message) LOG_FORMAT(clientOwner,Type,Message) remoteExec ["diag_log",2];  // Log line will be wrapped in string
+    #define LOG_FORMAT(Sender,Type,Message,TimeArray) ((TimeArray apply {str _x} joinString "-") + " | " + QUOTE(MOD) + " | " + QUOTE(PACKAGE) + " | " + Type + " | " + str Sender + " | " + Message)  // No Padding on system time
+    #define LOG(Type,Message) diag_log text LOG_FORMAT(clientOwner,Type,Message,systemTimeUTC);
+    #define LOG_S(Type,Message) LOG_FORMAT(clientOwner,Type,Message,systemTimeUTC) remoteExec ["diag_log",2];  // Log line will be wrapped in string
 #endif
 
 
@@ -84,7 +84,7 @@ Requires the following to be defined before the include. Example:
 #endif
 
 #define LOG_INFO(Message) LOG("INFO",Message)
-#define LOG_WARN(Message) LOG("WARN",Message)
+#define LOG_WARNING(Message) LOG("WARN",Message)
 #define LOG_ERROR(Message) LOG("ERROR",Message)
 
 #define LOG_S_DEBUG(Message) LOG_S("DEBUG",Message)
@@ -168,8 +168,8 @@ Requires the following to be defined before the include. Example:
 
 
 #define GVAR(Package,Name) UGLUE_3(MOD,Package,Name)
-#define SETG(Name,Value) SET_GENERIC(PVAR(Package,Name),Value);
-#define GETG(Name) GET_GENERIC(PVAR(Package,Name))
+#define SETG(Package,Name,Value) SET_GENERIC(PVAR(Package,Name),Value);
+#define GETG(Package,Name) GET_GENERIC(PVAR(Package,Name))
 
 #define PVAR(Name) UGLUE_3(MOD,PACKAGE,Name)
 #define SETP(Name,Value) SET_GENERIC(PVAR(Name),Value);
