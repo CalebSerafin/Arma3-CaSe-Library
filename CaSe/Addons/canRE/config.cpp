@@ -6,7 +6,7 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = 2.06;
-        requiredAddons[] = {};
+        requiredAddons[] = { QUOTE(UGLUE(MOD,core)) };
         author = "Caleb Serafin";
         authors[] = {"Caleb Serafin"};
         authorUrl = "https://github.com/CalebSerafin/Arma3-CaSe-Library";

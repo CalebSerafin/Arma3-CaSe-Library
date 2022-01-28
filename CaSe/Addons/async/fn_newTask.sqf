@@ -36,7 +36,7 @@ private _asyncTask = [
 if !(isNil "_code") then {
     [_asyncTask,_code,_argument] spawn {
         params ["_asyncTask","_code","_argument"];
-        [_asyncTask, _argument call _code] call CaSe_fnc_async_return;
+        [_asyncTask, _argument call _code] call FNCP(return);
     };
 };
 
