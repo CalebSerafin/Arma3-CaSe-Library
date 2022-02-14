@@ -8,6 +8,7 @@
 
 /// --- Package Macros Config --- ///
 //#define ENABLE_GVAR_OVERWRITE_MITIGATION
+//#define ENABLE_LOG_LEVEL_DEBUG
 
 
 /// --- Integration Detaction --- ///

@@ -32,3 +32,7 @@
 #define HAS_PACKAGE_PROFILING         __has_include("\x\CaSe\Addons\profiling\$PBOPREFIX$")
 #define HAS_PACKAGE_MACROINTERPRETER  __has_include("\x\CaSe\Addons\macroInterpreter\$PBOPREFIX$")
 #define HAS_PACKAGE_SANDBOX           __has_include("\x\CaSe\Addons\sandbox\$PBOPREFIX$")
+
+/// --- Installation Configuration --- ////
+// Specifies where calsses are defined. Change if packaged into mission or campaign.
+#define LOCAL_CONFIG configFile

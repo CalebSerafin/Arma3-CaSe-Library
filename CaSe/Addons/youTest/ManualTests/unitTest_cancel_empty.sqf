@@ -1,0 +1,36 @@
+#include "..\config.hpp"
+FIX_LINE_NUMBERS
+
+private _fnc_reporter = compileScript [TEST_DIRECTORY_PATH+"testReporter.sqf"];
+private _reporterContext = createHashmapFromArray [["_componentName","cancel-Empty"]];
+
+if (!isNil {Dev_unitTestInProgress}) exitWith {
+    LOG_ERROR("Previous unit test still running");
+    "Previous unit test still running";
+};
+Dev_unitTestInProgress = true;
+Dev_testHandle = [_fnc_reporter,_reporterContext] spawn {
+    //// Setup
+    params ["_fnc_reporter","_reporterContext"];
+
+    call FNCP(init);
+    [_reporterContext, "Test Started"] call _fnc_reporter;
+
+    //// Assert
+    private _cancellationToken = [] call FNCP(new);
+
+    [_cancellationToken] call FNCP(cancel);
+
+    private _passedTest = _cancellationToken #CTOKEN_I_IS_CANCELLED;
+    if (_passedTest) then {
+        [_reporterContext, "Test Passed"] call _fnc_reporter;
+    } else {
+        [_reporterContext, "Test Failed"] call _fnc_reporter;
+    };
+
+    //// Clean Up
+    call compileScript [TEST_DIRECTORY_PATH+"unitTestUtility_revertInit.sqf"];
+    call FNCP(init);
+    Dev_unitTestInProgress = nil;
+};
+"Unit Test Started";

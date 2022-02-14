@@ -5,11 +5,11 @@ RUN_ONLY_ONCE(libraryInit)
 // Get all package configs with an init function.
 
 private _cfgPatchesAndCfgFunctionConfigs =
-    "true" configClasses (configFile >> "CfgFunctions" >> QUOTE(MOD))
+    "true" configClasses (LOCAL_CONFIG >> "CfgFunctions" >> QUOTE(MOD))
     apply { [QUOTE(MOD) + "_" + configName _x, _x] }
     select {
         isClass ((_x#1) >> (configName (_x#1) + "_init"))
-        && isClass (configFile >> "CfgPatches" >> (_x#0))
+        && isClass (LOCAL_CONFIG >> "CfgPatches" >> (_x#0))
     };
 
 if (count _cfgPatchesAndCfgFunctionConfigs == 0) exitWith {
@@ -21,7 +21,7 @@ private _cfgPatches = keys _cfgPatchToConfig;
 private _todoCfgPatches = _cfgPatches createHashMapFromArray _cfgPatches;
 
 private _cfgPatchToDependencies = _cfgPatches createHashMapFromArray (_cfgPatches apply {
-    getArray (configFile >> "CfgPatches" >> _x >> "requiredAddons") select {_x in _cfgPatchToConfig};
+    getArray (LOCAL_CONFIG >> "CfgPatches" >> _x >> "requiredAddons") select {_x in _cfgPatchToConfig};
 });
 
 
